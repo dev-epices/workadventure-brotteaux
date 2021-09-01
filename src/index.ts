@@ -11,13 +11,20 @@ const ZONES : any = {
     jitsiGaia: 'Gaia',
     jitsiHelios: 'Helios',
     jitsiNeptune: 'Neptune',
-    silent: 'Ne pas déranger'
+    silent: 'Ne pas déranger',
+    terrace: 'Pause repas'
 }
 
 WA.onInit().then(() => {
     const players: any = WA.state.loadVariable('players')
     console.log(players)
     WA.state.saveVariable('players', {...players, [WA.player.name]: ''})
+});
+
+window.addEventListener('beforeunload', function (e) {
+    const players: any = WA.state.loadVariable('players')
+    delete players[WA.player.name]
+    WA.state.saveVariable('players', players)
 });
 
 //////// MENU
@@ -27,9 +34,10 @@ WA.ui.registerMenuCommand("Liste de presence", () => {
         ? Object.entries(players).map(([name, zone]) => `${name} : ${zone}`).join("\n")
         //? players
         : 'No one online'
-    WA.chat.sendChatMessage(text, "Bot")*/
+    WA.chat.sendChatMessage(`'//// Liste de présence :\n${text}`, "Bot")*/
     WA.chat.sendChatMessage('//// Liste de présence :', BOT_NAME)
     Object.entries(players).forEach(([name, zone]: [string, any]) => {
+        if (name === WA.player.name) return
         const whereAt : string = (zone != '' ? ` : ${ZONES[zone]}` : '')
         WA.chat.sendChatMessage(`${name}${whereAt}`, BOT_NAME)
     })
