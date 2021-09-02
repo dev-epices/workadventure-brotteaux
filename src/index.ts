@@ -10,7 +10,7 @@ const ZONES : any = {
     jitsiChillZone: 'Pause café',
     jitsiGaia: 'Gaia',
     jitsiHelios: 'Helios',
-    jitsiNeptune: 'Neptune',
+    jitsiEole: 'Eole',
     silent: 'Ne pas déranger',
     terrace: 'Pause repas'
 }
