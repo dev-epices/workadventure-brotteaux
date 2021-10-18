@@ -1,8 +1,9 @@
 /// <reference path="../node_modules/@workadventure/iframe-api-typings/iframe_api.d.ts" />
 
-let currentPopup: any = undefined;
-const today = new Date();
-const time = today.getHours() + ":" + today.getMinutes();
+import { bootstrapExtra } from "@workadventure/scripting-api-extra";
+
+bootstrapExtra(); // Calling bootstrapExtra will initiliaze all the "custom properties"  
+
 const BOT_NAME = 'Alfred'
 const ZONES : any = {
     officeEpicesDev: 'Epices - Dev',
@@ -56,17 +57,3 @@ Object.keys(ZONES).forEach(office => {
         WA.state.saveVariable('players', {...players, [WA.player.name]: ''})
     })
 })
-
-
-WA.room.onEnterZone('clock', () => {
-    currentPopup =  WA.ui.openPopup("clockPopup","It's " + time,[]);
-})
-
-WA.room.onLeaveZone('clock', closePopUp)
-
-function closePopUp(){
-    if (currentPopup !== undefined) {
-        currentPopup.close();
-        currentPopup = undefined;
-    }
-}
